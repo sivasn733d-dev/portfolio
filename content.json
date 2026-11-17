@@ -1,0 +1,113 @@
+{
+  "profile": {
+    "name": "Siva Nagaraju Yallaturi",
+    "firstName": "Siva",
+    "title": ".NET Full Stack Developer",
+    "techLine": "C# · ASP.NET Core · Web API · SQL Server",
+    "location": "Bangalore / Hyderabad, India"
+  },
+  "hero": {
+    "bubble": "Welcome to Yallaturi Tower. Five floors, one engineer. Scroll, and I'll give you the tour."
+  },
+  "summary": {
+    "heading": "Full Stack .NET Developer",
+    "stats": [
+      { "value": "3+", "label": "years building enterprise web apps" },
+      { "value": "1,200+", "label": "employees tracked by my HRMS" },
+      { "value": "2", "label": "domains: healthcare and insurance" }
+    ],
+    "paragraphs": [
+      "I design, develop, deploy and support enterprise web applications in the healthcare and insurance domains, with hands-on expertise in C#, ASP.NET MVC, ASP.NET Core, RESTful Web API, Entity Framework, ADO.NET, LINQ, SQL Server and Oracle.",
+      "On the front end I work with JavaScript, jQuery, Bootstrap and AJAX. I migrate legacy applications to .NET Core, build end-to-end modules, troubleshoot production issues, and deliver in Agile/Scrum teams using Git and CI/CD pipelines."
+    ],
+    "now": "Right now: building an HRMS that tracks daily attendance for 1,200+ employees, integrated with Matrix attendance punching machines.",
+    "bubble": "Ground floor: the blueprint. 3+ years building .NET systems people rely on every day."
+  },
+  "jobs": [
+    {
+      "role": "Senior Associate, .NET Full Stack Developer",
+      "company": "Manav Charitable Hospital",
+      "city": "Bangalore",
+      "from": "Feb 2026",
+      "to": "present",
+      "project": "Projects: HRMS, JNIIS and PRM applications",
+      "points": [
+        "Designed and built an end-to-end HRMS in .NET Core managing daily attendance for 1,200+ employees.",
+        "Integrated Matrix attendance punching machines, pushing employee punch timings into the HRMS for automated tracking.",
+        "Migrated and enhanced the JNIIS and PRM applications from ASP.NET MVC to .NET Core.",
+        "Support the hospital applications that handle daily patient transactions; built RESTful Web APIs and tuned SQL queries and stored procedures."
+      ],
+      "tech": ["C#", "ASP.NET Core", "ASP.NET MVC", "Web API", "SQL Server", "jQuery", "Bootstrap", "Matrix devices"],
+      "bubble": "My current build: an HRMS I designed end to end, now running attendance for 1,200+ people."
+    },
+    {
+      "role": "Software Engineer I",
+      "company": "Vertafore India Pvt Ltd",
+      "doorName": "Vertafore",
+      "city": "Hyderabad",
+      "from": "Oct 2022",
+      "to": "Jun 2024",
+      "project": "Project: Sagitta (insurance domain)",
+      "points": [
+        "Migrated legacy VBScript to JavaScript, improving efficiency by 30%.",
+        "Improved Chrome compatibility of the UI, cutting page load time by 25%.",
+        "Built ASP.NET MVC validations and deployed through Git pipelines.",
+        "Served as Scrum Master for a team of 6 developers, running sprint planning in Agile."
+      ],
+      "tech": ["ASP.NET MVC", "C#", "JavaScript", "VBScript", "Git", "CI/CD", "Agile/Scrum"],
+      "bubble": "At Vertafore I modernised legacy code, cut page load by 25% and ran the sprints as Scrum Master."
+    },
+    {
+      "role": "Graduate Trainee",
+      "company": "Jindal Naturecure Institute",
+      "city": "Bangalore",
+      "from": "Dec 2021",
+      "to": "Oct 2022",
+      "project": "Project: JNIIS (healthcare management system)",
+      "points": [
+        "Built modules on ASP.NET MVC for patient admission, doctor allocation, case sheets, document upload, treatment ordering and discharge summary.",
+        "Admission and discharge modules reduced paperwork by 40%.",
+        "Added digital signatures for treatment consent and patient declarations.",
+        "Streamlined data retrieval from MS SQL Server; responsive UI with Bootstrap 4."
+      ],
+      "tech": ["ASP.NET MVC", "C#", "MS SQL Server", "Bootstrap 4", "jQuery", "AJAX"],
+      "bubble": "Where it all began: hospital modules that cut paperwork by 40%."
+    }
+  ],
+  "education": {
+    "degree": "Bachelor of Commerce (Computers)",
+    "doorLabel": "B.Com (Computers)",
+    "college": "VVR Degree College, Acharya Nagarjuna University, Guntur",
+    "years": "2017 to 2020",
+    "text": "A commerce degree with a computers specialisation: the business side of software, which helps me in domain-heavy work like hospital administration, HR and insurance systems.",
+    "bubble": "I started in commerce, but my passion for IT built this tower. That's why my code speaks business too."
+  },
+  "skills": {
+    "heading": "The toolkit",
+    "groups": [
+      { "name": "Languages", "items": ["C#", "C", "JavaScript", "OOP"] },
+      { "name": "Backend & frameworks", "items": ["ASP.NET Core", "ASP.NET MVC", "ASP.NET Web API", ".NET Framework", "Entity Framework", "ADO.NET", "LINQ", "RESTful APIs"] },
+      { "name": "Frontend", "items": ["HTML5", "CSS3", "jQuery", "Bootstrap", "AJAX", "Responsive design"] },
+      { "name": "Databases", "items": ["SQL Server", "Oracle", "T-SQL", "Stored procedures", "Triggers", "Universe DB"] },
+      { "name": "Tools & platforms", "items": ["Visual Studio 2022", "Git", "Postman", "IIS", "CI/CD pipelines", "Matrix attendance machines"] },
+      { "name": "Ways of working & domains", "items": ["Agile", "Scrum", "SDLC", "Production support", "Healthcare", "HRMS", "Insurance"] }
+    ],
+    "bubble": "The engine room. This is the stack I build with, end to end."
+  },
+  "awards": {
+    "heading": "Recognition",
+    "items": [
+      { "title": "Best Debutant of the Year", "detail": "Vertafore India Pvt Ltd, Hyderabad" },
+      { "title": "Best Scrum Master Award", "detail": "For leadership and team coordination while leading a team of 6 developers." }
+    ],
+    "bubble": "The trophy room: Best Debutant in my first year, and Best Scrum Master."
+  },
+  "contact": {
+    "pitch": "3+ years delivering healthcare, HR and insurance systems with C#, ASP.NET Core and SQL Server. I'd be glad to talk about how I can contribute to your team.",
+    "email": "siva.nr733@gmail.com",
+    "phone": "+91 77320 52470",
+    "linkedin": "https://www.linkedin.com/in/sivanagaraju-yallaturi",
+    "exitBubble": "That's the tour. Let me walk you out the scenic way.",
+    "byeBubble": "Thanks for the visit. The doors are open: let's build your next system together."
+  }
+}

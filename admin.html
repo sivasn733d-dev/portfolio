@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Tower Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--panel:#141c36;--panel2:#1a2445;--line:rgba(255,255,255,.1);--ink:#eef1f8;--muted:#9aa5c3;--amber:#ffb547;--green:#22c55e;--red:#ff6b6b;--focus:#7aa7ff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(11,16,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header h1{margin:0;font:800 18px Archivo,sans-serif;letter-spacing:.02em}
+header h1 span{color:var(--amber)}
+.bar{display:flex;flex-wrap:wrap;gap:8px}
+button{font:600 14px "IBM Plex Sans",sans-serif;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:9px 14px;cursor:pointer}
+button:hover{border-color:rgba(255,255,255,.25)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+button.primary{background:var(--amber);color:#1b1200;border-color:var(--amber)}
+button.small{padding:4px 9px;font-size:12.5px;border-radius:8px}
+button.danger{color:var(--red)}
+main{max-width:860px;margin:0 auto;padding:18px 16px 80px}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:16px;color:var(--muted)}
+.note b{color:var(--ink)}
+details.sec{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden}
+details.sec>summary{cursor:pointer;padding:14px 16px;font:800 16px Archivo,sans-serif;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.sec>summary::after{content:"＋";color:var(--muted)}
+details.sec[open]>summary::after{content:"－"}
+.body{padding:0 16px 16px}
+label.f{display:block;margin:10px 0}
+label.f>span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em}
+input[type=text],textarea{width:100%;background:#0f1630;border:1px solid var(--line);border-radius:9px;color:var(--ink);font:15px/1.45 "IBM Plex Sans",sans-serif;padding:9px 11px}
+textarea{resize:vertical;min-height:64px}
+.item{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0;background:rgba(255,255,255,.02)}
+.item-h{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:600}
+.item-h .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.tools{display:flex;gap:6px;flex:none}
+.row{display:flex;gap:6px;align-items:flex-start;margin:6px 0}
+.row>input,.row>textarea{flex:1}
+.list-h{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:12px}
+#status{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:10px 18px;font-weight:600;opacity:0;transition:opacity .25s;max-width:calc(100vw - 32px);text-align:center}
+#status.show{opacity:1}#status.ok{border-color:var(--green)}#status.err{border-color:var(--red)}
+dialog{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:16px;max-width:520px;width:calc(100vw - 32px);padding:20px}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h2{margin:0 0 6px;font:800 18px Archivo,sans-serif}
+dialog p{color:var(--muted);margin:6px 0 10px}
+dialog ol{color:var(--muted);padding-left:20px;margin:6px 0 10px}
+a{color:var(--amber)}
+.hint{font-size:13px;color:var(--muted);margin:4px 0 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>Tower <span>Admin</span></h1>
+  <div class="bar">
+    <button id="bPreview" type="button">Preview</button>
+    <button id="bDownload" type="button">Download</button>
+    <button id="bKey" type="button">GitHub key</button>
+    <button id="bSave" class="primary" type="button">Save &amp; publish</button>
+  </div>
+</header>
+<main>
+  <div class="note"><b>Edit any field, then press Save &amp; publish.</b> Your live portfolio updates about a minute later. <b>Preview</b> shows your unsaved changes in a new tab first. Speech bubbles are the lines the character says on each floor. You can list up to 4 jobs; the tower adds one door per job.</div>
+  <div id="form">Loading content…</div>
+</main>
+<div id="status" role="status"></div>
+
+<dialog id="dlg">
+  <form method="dialog">
+    <h2>Connect your GitHub key</h2>
+    <p>Saving needs a key that only you have. It is stored only in this browser on this device.</p>
+    <ol>
+      <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → New fine-grained token</a>.</li>
+      <li>Name it “portfolio admin”. Under <b>Repository access</b>, pick <b>Only select repositories</b> → your <b>portfolio</b> repo.</li>
+      <li>Under <b>Permissions → Contents</b>, choose <b>Read and write</b>. Generate it and copy it.</li>
+    </ol>
+    <label class="f"><span>GitHub username</span><input type="text" id="kOwner" autocomplete="off" spellcheck="false"></label>
+    <label class="f"><span>Repository name</span><input type="text" id="kRepo" value="portfolio" autocomplete="off" spellcheck="false"></label>
+    <label class="f"><span>Key (token)</span><input type="text" id="kToken" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></label>
+    <div class="bar" style="justify-content:flex-end;margin-top:12px">
+      <button value="forget" type="submit" class="danger">Forget key</button>
+      <button value="cancel" type="submit">Cancel</button>
+      <button value="ok" type="submit" class="primary">Save key</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const LABELS = {
+  profile: 'Name & title (shown on the tower and entrance)', hero: 'Opening scene', summary: 'Ground floor · Profile summary',
+  jobs: 'Floor 1 · Experience (one door per job, max 4)', education: 'Floor 2 · Education', skills: 'Floor 3 · Skills',
+  awards: 'Floor 4 · Awards', contact: 'Exit · Contact details',
+  name: 'Full name', firstName: 'First name (badge and name tag)', title: 'Job title', techLine: 'Tech line', location: 'Location',
+  bubble: 'Speech bubble', heading: 'Heading', stats: 'Stats (max 3)', value: 'Number', label: 'Label', paragraphs: 'Paragraphs', now: 'Currently working on',
+  role: 'Role', company: 'Company', doorName: 'Short name on the door (optional)', city: 'City', from: 'From', to: 'To', project: 'Project line',
+  points: 'Highlights', tech: 'Tech tags', degree: 'Degree', doorLabel: 'Short label on the door', college: 'College / university', years: 'Years', text: 'Description',
+  groups: 'Skill groups', items: 'Items', detail: 'Detail', pitch: 'Closing pitch', email: 'Email', phone: 'Phone', linkedin: 'LinkedIn URL',
+  exitBubble: 'Bubble when leaving Floor 4', byeBubble: 'Goodbye bubble at the entrance'
+};
+const TEMPLATES = {
+  jobs: { role: '', company: '', doorName: '', city: '', from: '', to: '', project: '', points: [''], tech: [''], bubble: '' },
+  stats: { value: '', label: '' }, groups: { name: '', items: [''] }, items: { title: '', detail: '' }
+};
+const LONG = new Set(['bubble', 'paragraphs', 'now', 'points', 'text', 'pitch', 'exitBubble', 'byeBubble', 'detail']);
+const LIMIT = { jobs: 4, stats: 3 };
+const lab = k => LABELS[k] || k.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase());
+let data = null; const OPEN = new Set(['profile']);
+const formEl = document.getElementById('form');
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} } };
+
+function status(msg, kind = '', ms = 3500) {
+  const s = document.getElementById('status'); s.textContent = msg; s.className = 'show ' + kind;
+  clearTimeout(status.t); if (ms) status.t = setTimeout(() => s.className = '', ms);
+}
+function field(key, obj, k) {
+  const long = LONG.has(k) || LONG.has(key);
+  const el = document.createElement(long ? 'textarea' : 'input');
+  if (!long) el.type = 'text';
+  el.value = obj[k] ?? ''; if (long) el.rows = Math.min(6, Math.max(2, Math.ceil(String(el.value).length / 70)));
+  el.addEventListener('input', () => { obj[k] = el.value; dirty(); });
+  return el;
+}
+function render() {
+  const y = scrollY; formEl.innerHTML = '';
+  for (const key of Object.keys(data)) {
+    const d = document.createElement('details'); d.className = 'sec'; d.open = OPEN.has(key);
+    d.addEventListener('toggle', () => d.open ? OPEN.add(key) : OPEN.delete(key));
+    d.innerHTML = `<summary>${lab(key)}</summary>`; const b = document.createElement('div'); b.className = 'body'; d.append(b);
+    build(b, data, key, key); formEl.append(d);
+  }
+  scrollTo(0, y);
+}
+function build(host, parent, k, top) {
+  const v = parent[k];
+  if (Array.isArray(v)) return buildList(host, parent, k);
+  if (v && typeof v === 'object') { for (const kk of Object.keys(v)) build(host, v, kk, top); return; }
+  const l = document.createElement('label'); l.className = 'f'; l.innerHTML = `<span>${lab(k)}</span>`; l.append(field(k, parent, k)); host.append(l);
+}
+function moveBtns(arr, i, extra) {
+  const t = document.createElement('div'); t.className = 'tools';
+  const mk = (txt, title, fn, cls = '') => { const b = document.createElement('button'); b.type = 'button'; b.className = 'small ' + cls; b.textContent = txt; b.title = title; b.setAttribute('aria-label', title); b.onclick = () => { fn(); dirty(); render(); }; t.append(b); };
+  if (i > 0) mk('↑', 'Move up', () => [arr[i - 1], arr[i]] = [arr[i], arr[i - 1]]);
+  if (i < arr.length - 1) mk('↓', 'Move down', () => [arr[i + 1], arr[i]] = [arr[i], arr[i + 1]]);
+  mk('✕', 'Remove', () => arr.splice(i, 1), 'danger');
+  return t;
+}
+function buildList(host, parent, k) {
+  const arr = parent[k];
+  const h = document.createElement('div'); h.className = 'list-h'; h.textContent = lab(k); host.append(h);
+  const objs = arr.length ? typeof arr[0] === 'object' : !!TEMPLATES[k];
+  arr.forEach((it, i) => {
+    if (objs) {
+      const box = document.createElement('div'); box.className = 'item';
+      const hh = document.createElement('div'); hh.className = 'item-h';
+      const t = document.createElement('div'); t.className = 't'; t.textContent = it.company || it.title || it.name || it.value || `Item ${i + 1}`;
+      hh.append(t, moveBtns(arr, i)); box.append(hh);
+      for (const kk of Object.keys(it)) build(box, it, kk);
+      host.append(box);
+    } else {
+      const r = document.createElement('div'); r.className = 'row';
+      r.append(field(k, arr, i), moveBtns(arr, i)); host.append(r);
+    }
+  });
+  if (!LIMIT[k] || arr.length < LIMIT[k]) {
+    const add = document.createElement('button'); add.type = 'button'; add.className = 'small'; add.style.marginTop = '6px';
+    add.textContent = '+ Add ' + (objs ? (k === 'jobs' ? 'job' : k === 'groups' ? 'group' : k === 'stats' ? 'stat' : 'item') : 'line');
+    add.onclick = () => { arr.push(objs ? JSON.parse(JSON.stringify(TEMPLATES[k] || blank(arr[0]))) : ''); dirty(); render(); };
+    host.append(add);
+  }
+}
+function blank(o) { const r = {}; for (const k in o) r[k] = Array.isArray(o[k]) ? [''] : typeof o[k] === 'object' ? blank(o[k]) : ''; return r; }
+function clean(o) {
+  if (Array.isArray(o)) return o.map(clean).filter(v => !(typeof v === 'string' && !v.trim()));
+  if (o && typeof o === 'object') { const r = {}; for (const k in o) r[k] = clean(o[k]); return r; }
+  return typeof o === 'string' ? o.trim() : o;
+}
+function dirty() { store.set('tower-draft', JSON.stringify(clean(data))); }
+const json = () => JSON.stringify(clean(data), null, 2) + '\n';
+
+document.getElementById('bPreview').onclick = () => { dirty(); open('index.html?preview=1', '_blank'); };
+document.getElementById('bDownload').onclick = () => {
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([json()], { type: 'application/json' })); a.download = 'content.json'; a.click();
+};
+const dlg = document.getElementById('dlg');
+function openKey() {
+  document.getElementById('kOwner').value = store.get('gh-owner') || guessOwner();
+  document.getElementById('kRepo').value = store.get('gh-repo') || guessRepo();
+  document.getElementById('kToken').value = store.get('gh-token') || '';
+  dlg.showModal();
+}
+dlg.addEventListener('close', () => {
+  if (dlg.returnValue === 'ok') { store.set('gh-owner', document.getElementById('kOwner').value.trim()); store.set('gh-repo', document.getElementById('kRepo').value.trim()); store.set('gh-token', document.getElementById('kToken').value.trim()); status('Key saved on this device', 'ok'); }
+  if (dlg.returnValue === 'forget') { store.set('gh-token', null); status('Key removed from this device', 'ok'); }
+});
+document.getElementById('bKey').onclick = openKey;
+function guessOwner() { const m = location.hostname.match(/^([^.]+)\.github\.io$/i); return m ? m[1] : ''; }
+function guessRepo() { const seg = location.pathname.split('/').filter(Boolean)[0]; return guessOwner() && seg && !/\.html$/.test(seg) ? seg : 'portfolio'; }
+const b64 = s => { const bytes = new TextEncoder().encode(s); let bin = ''; bytes.forEach(b => bin += String.fromCharCode(b)); return btoa(bin); };
+
+document.getElementById('bSave').onclick = async () => {
+  const owner = store.get('gh-owner'), repo = store.get('gh-repo'), token = store.get('gh-token');
+  if (!owner || !repo || !token) { openKey(); return; }
+  const btn = document.getElementById('bSave'); btn.disabled = true; status('Saving…', '', 0);
+  const api = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/content.json`;
+  const hdr = { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+  try {
+    let sha;
+    const cur = await fetch(api, { headers: hdr, cache: 'no-store' });
+    if (cur.status === 401) throw new Error('GitHub did not accept the key. Press "GitHub key" and paste a fresh one.');
+    if (cur.ok) sha = (await cur.json()).sha; else if (cur.status !== 404) throw new Error('Could not reach your repository (' + cur.status + '). Check the username and repository name.');
+    const put = await fetch(api, { method: 'PUT', headers: hdr, body: JSON.stringify({ message: 'Update portfolio content', content: b64(json()), sha }) });
+    if (!put.ok) { const e = await put.json().catch(() => ({})); throw new Error(put.status === 403 || put.status === 404 ? 'The key needs "Contents: Read and write" on this repository.' : (e.message || 'Save failed (' + put.status + ')')); }
+    store.set('tower-draft', null);
+    status('Saved. Your live site updates in about a minute.', 'ok', 6000);
+  } catch (e) { status(e.message || 'Save failed', 'err', 8000); }
+  btn.disabled = false;
+};
+
+(async () => {
+  const draft = store.get('tower-draft');
+  try {
+    const r = await fetch('content.json', { cache: 'no-store' });
+    data = await r.json();
+  } catch (e) { formEl.textContent = 'Could not load content.json.'; return; }
+  if (draft) {
+    try { const d = JSON.parse(draft); if (JSON.stringify(d) !== JSON.stringify(clean(data))) { data = d; status('Restored your unsaved changes', 'ok'); } } catch (e) {}
+  }
+  render();
+})();
+</script>
+</body>
+</html>
